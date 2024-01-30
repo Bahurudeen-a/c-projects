@@ -41,7 +41,7 @@ void new_acc()
     int choice;
     FILE *ptr;
     ptr = fopen("record.dat", "a+");
-    account_no:
+account_no:
     system("cls");
     printf("\t\t\t\xB2\xB2\xB2 ADD RECORD \xB2\xB2\xB2\xB2");
     printf("\n\n\nEnter Today's Date(mm/dd/yyyy): ");
@@ -77,7 +77,7 @@ void new_acc()
     fprintf(ptr, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n", add.acc_no, add.name, add.dob.month, add.dob.day, add.dob.year, add.age, add.address, add.citizenship, add.phone, add.acc_type, add.amt, add.deposite.month, add.deposite.day, add.deposite.year);
     fclose(ptr);
     printf("\nAccount Created successfully!");
-    add_invalid:
+add_invalid:
     printf("\n\n\n\t\tEnter 1 to go to the main menu and 0 to exit:");
     scanf("%d", &main_exit);
     system("cls");
@@ -113,7 +113,7 @@ void view_list()
         system("cls");
         printf("\nNo RECORDS!!\n");
     }
-    view_list_invalid:
+view_list_invalid:
     printf("\n\nEnter 1 to go to the main menu and 0 to exit:");
     scanf("%d", &main_exit);
     system("cls");
@@ -132,3 +132,88 @@ void view_list()
     }
 }
 
+void edit(void)
+{
+    int choice, test = 0;
+    FILE *old, *newrec;
+    old = fopen("record.dat", "r");
+    newrec = fopen("new.dat", "w");
+
+    printf("\nEnter the account no of the customer whose info you want to change: ");
+    scanf("%d", &upd.acc_no);
+    while (fscanf(old, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d", &add.acc_no, add.name, &add.dob.month, &add.dob.day, &add.dob.year, &add.age, add.address, add.citizenship, &add.phone, add.acc_type, &add.amt, &add.deposite.year) != EOF)
+    {
+        if (add.acc_no == upd.acc_no)
+        {
+            test = 1;
+            printf("\nWhich information do you want to change: \n1.Address\n2.Phone\n\nEnter your choice(1 for address and 2 for phone):");
+            scanf("%d", &choice);
+            system("cls");
+            if (choice == 1)
+            {
+                printf("Enter new Address: ");
+                scanf("%s", upd.address);
+                fprintf(newrec, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d", add.acc_no, add.name, add.dob.month, add.dob.day, add.dob.year, add.age, upd.address, add.citizenship, add.phone, add.acc_type, add.amt, add.deposite.month, add.deposite.day, add.deposite.year);
+                system("cls");
+                printf("Changes Saved");
+            }
+            else if (choice == 2)
+            {
+                printf("Enter the New Phone Number");
+                scanf("%lf", &upd.phone);
+                fprintf(newrec, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d", add.acc_no, add.name, add.dob.month, add.dob.day, add.dob.year, add.age, add.address, add.citizenship, upd.phone, add.acc_type, add.amt, add.deposite.month, add.deposite.day, add.deposite.year);
+                system("cls");
+                printf("Changes Saved");
+            }
+        }
+        else
+        {
+            fprintf(newrec, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d,%d", add.acc_no, add.name, add.dob.month, add.dob.day, add.dob.year, add.age, add.address, add.citizenship, add.phone, add.acc_type, add.amt, add.deposite.month, add.deposite.day, add.deposite.year);
+        }
+        fclose(old);
+        fclose(newrec);
+        remove("record.dat");
+        rename("new.dat", "record.dat");
+
+        if (test != 1)
+        {
+            system("cls");
+            printf("\nRecord not found\a\a\a");
+        edit_invalid:
+            printf("\nEnter 0 to try again, 1 to return main menu and 2 to exit: ");
+            scanf("%d", &main_exit);
+            system("cls");
+            if (main_exit == 1)
+            {
+                menu();
+            }
+            else if (main_exit == 2)
+            {
+                close();
+            }
+            else if (main_exit == 0)
+            {
+                edit();
+            }
+            else
+            {
+                printf("\nInvalid\a");
+                goto edit_invalid;
+            }
+        }
+        else
+        {
+            printf("\n\nEnter 1 to go to the main menu and 0 to exit: ");
+            scanf("%d", &main_exit);
+            system("cls");
+            if (main_exit == 1)
+            {
+                menu();
+            }
+            else
+            {
+                close();
+            }
+        }
+    }
+}
