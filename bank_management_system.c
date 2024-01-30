@@ -41,7 +41,7 @@ void new_acc()
     int choice;
     FILE *ptr;
     ptr = fopen("record.dat", "a+");
-    int account_no;
+    account_no:
     system("cls");
     printf("\t\t\t\xB2\xB2\xB2 ADD RECORD \xB2\xB2\xB2\xB2");
     printf("\n\n\nEnter Today's Date(mm/dd/yyyy): ");
@@ -74,4 +74,61 @@ void new_acc()
     scanf("%f", &add.amt);
     printf("\nType of Account: \n\t#Saving\n\t#Current\n\t#Fixed1(for 1 year)\n\t#Fixed2(for 2 years)\n\t#Fixed(for 3 year)\n\nEnter your choice: ");
     scanf("%s", add.acc_type);
+    fprintf(ptr, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n", add.acc_no, add.name, add.dob.month, add.dob.day, add.dob.year, add.age, add.address, add.citizenship, add.phone, add.acc_type, add.amt, add.deposite.month, add.deposite.day, add.deposite.year);
+    fclose(ptr);
+    printf("\nAccount Created successfully!");
+    add_invalid:
+    printf("\n\n\n\t\tEnter 1 to go to the main menu and 0 to exit:");
+    scanf("%d", &main_exit);
+    system("cls");
+    if (main_exit == 1)
+    {
+        menu();
+    }
+    else if (main_exit == 0)
+    {
+        close();
+    }
+    else
+    {
+        printf("\nInvalid\n");
+        goto add_invalid;
+    }
 }
+void view_list()
+{
+    FILE *view;
+    view = fopen("record.dat", "r");
+    int test = 0;
+    system("cls");
+    printf("\nACC_NO\tNAME\t\tADDRESS\t\tPHONE\n");
+    while (fscanf(view, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d", &add.acc_no, add.name, &add.dob.month, &add.dob.day, &add.dob.year, &add.age, add.address, add.citizenship, &add.phone, add.acc_type, &add.amt, &add.deposite.month, &add.deposite.day, &add.deposite.year) != EOF)
+    {
+        printf("\n%6d\t%10s\t\t\t%10s\t\t%0lf", add.acc_no, add.name, add.address, add.phone);
+        test++;
+    }
+    fclose(view);
+    if (test == 0)
+    {
+        system("cls");
+        printf("\nNo RECORDS!!\n");
+    }
+    view_list_invalid:
+    printf("\n\nEnter 1 to go to the main menu and 0 to exit:");
+    scanf("%d", &main_exit);
+    system("cls");
+    if (main_exit == 1)
+    {
+        menu();
+    }
+    else if (main_exit == 0)
+    {
+        close();
+    }
+    else
+    {
+        printf("\nInvalid\n");
+        goto view_list_invalid;
+    }
+}
+
