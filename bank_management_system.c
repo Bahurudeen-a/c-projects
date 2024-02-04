@@ -166,22 +166,22 @@ void edit(void)
                 printf("Changes Saved");
             }
             else
-        {
-            fprintf(newrec, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d,%d", add.acc_no, add.name, add.dob.month, add.dob.day, add.dob.year, add.age, add.address, add.citizenship, add.phone, add.acc_type, add.amt, add.deposite.month, add.deposite.day, add.deposite.year);
-        }
+            {
+                fprintf(newrec, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d,%d", add.acc_no, add.name, add.dob.month, add.dob.day, add.dob.year, add.age, add.address, add.citizenship, add.phone, add.acc_type, add.amt, add.deposite.month, add.deposite.day, add.deposite.year);
+            }
 <<<<<<< HEAD
-    }
-    fclose(old);
-    fclose(newrec);
-    remove("record.dat");
-    rename("new.dat", "record.dat");
-=======
         }
-        
         fclose(old);
         fclose(newrec);
         remove("record.dat");
         rename("new.dat", "record.dat");
+        == == == =
+    }
+
+    fclose(old);
+    fclose(newrec);
+    remove("record.dat");
+    rename("new.dat", "record.dat");
 >>>>>>> ac818f98ad0b28daa5dccd3e698908abb504edf7
 
     if (test != 1)
