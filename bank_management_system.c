@@ -375,3 +375,150 @@ void erase(void)
         }
     }
 }
+
+void see(void)
+{
+    FILE *ptr;
+    int test = 0, rate;
+    int choice;
+    float time;
+    float intrst;
+    ptr = fopen("record.dat", "r");
+    printf("Do you want to check by \n1.Account No \n2.Name \nEnter your option: ");
+    scanf("%d", &choice);
+    if (choice == 1)
+    {
+        printf("Enter the account no: ");
+        scanf("%d", &check.acc_no);
+        while (fscanf(ptr, "%d %s %d/%d/%d %s %s %lf %s %f %d/%d/%d", &add.acc_no, add.name, &add.dob.month, &add.dob.day, &add.dob.year, &add.age, add.address, add.citizenship, &add.phone, add.acc_type, &add.amt, &add.deposite.month, &add.deposite.day, &add.deposite.year) != EOF)
+        {
+            if (add.acc_no == check.acc_no)
+            {
+                system("cls");
+                test = 1;
+                printf("\nAccount no: %d \nName: %s \nDOB: %d/%d/%d \nAge: %d \nAddress: %s \nCitizenship :%s \nPhone:%lf \nType of Account: %s \nAmount Deposited:₹%.2lf \nDate of Deposite: %d/%d/%d\n", add.acc_no, add.name, add.dob.month, add.dob.day, add.dob.year, add.age, add.address, add.citizenship, add.phone, add.acc_type, add.amt, add.deposite.month, add.deposite.day, add.deposite.year);
+                if (strcmp(add.acc_type, "fixed1") == 0)
+                {
+                    time = 1.0;
+                    rate = 9;
+                    intrst = intrest(time, add.amt, rate);
+                    printf("\n\nYou wil get ₹%.2f ad intrest on %d/%d/%d", intrst, add.deposite.month, add.deposite.day, add.deposite.year + 1);
+                }
+                else if (strcmp(add.acc_type, "fixed2") == 0)
+                {
+                    time = 2.0;
+                    rate = 11;
+                    intrst = intrest(time, add.amt, rate);
+                    printf("\n\nYou wil get ₹%.2f ad intrest on %d/%d/%d", intrst, add.deposite.month, add.deposite.day, add.deposite.year + 2);
+                }
+                else if (strcmp(add.acc_type, "fixed3") == 0)
+                {
+                    time = 3.0;
+                    rate = 13;
+                    intrst = intrest(time, add.amt, rate);
+                    printf("\n\nYou wil get ₹%.2f ad intrest on %d/%d/%d", intrst, add.deposite.month, add.deposite.day, add.deposite.year + 3);
+                }
+                else if (strcmp(add.acc_type, "saving" == 0))
+                {
+                    time = (1.0 / 12.0);
+                    rate = 8;
+                    intrst = intrest(time, add.amt, rate);
+                    printf("\n\nYou will get ₹%.2f as interset on %d of every month", intrst, add.deposite.day);
+                }
+                else if (strcmp(add.acc_type, "current" == 0))
+                {
+                    printf("\nYou will get no interest\a\a\n");
+                }
+            }
+        }
+    }
+    else if (choice == 2)
+    {
+        printf("Enter the name: ");
+        scanf("%s", &check.name);
+        while (fscanf(ptr, "%d %s %d %d/%d/%d %d %s %s %lf %s %f %d/%d/%d", &add.acc_no, add.name, &add.dob.month, &add.dob.day, &add.dob.year, &add.age, add.address, add.citizenship, &add.acc_type, &add.amt, &add.deposite, &add.deposite.day, &add.deposite.year) != EOF)
+        {
+            if (strcmp(add.name, check.name) == 0)
+            {
+                system("cls");
+                test = 1;
+                printf("\nAccount No:%d \nName: %s \nDOB: %d/%d/%d \nAge: %d \nAddress: %s \nCitizenship: %s \nPhone number: %.0lf \nType of account: %s \nAmount %.2f, \nDate of Deposite: %d/%d/%d\n", add.acc_no, add.name, add.dob.month, add.dob.day, add.dob.year, add.age, add.address, add.citizenship, add.phone, add.acc_type, add.amt, add.deposite.month, add.deposite.day, add.deposite.year);
+                if (strcmp(add.acc_type, "fixed1") == 0)
+                {
+                    time = 1.0;
+                    rate = 9;
+                    intrst = intrest(time, add.amt, rate);
+                    printf("\n\nYou wil get ₹%.2f ad intrest on %d/%d/%d", intrst, add.deposite.month, add.deposite.day, add.deposite.year + 1);
+                }
+                else if (strcmp(add.acc_type, "fixed2") == 0)
+                {
+                    time = 2.0;
+                    rate = 11;
+                    intrst = intrest(time, add.amt, rate);
+                    printf("\n\nYou wil get ₹%.2f ad intrest on %d/%d/%d", intrst, add.deposite.month, add.deposite.day, add.deposite.year + 2);
+                }
+                else if (strcmp(add.acc_type, "fixed3") == 0)
+                {
+                    time = 3.0;
+                    rate = 13;
+                    intrst = intrest(time, add.amt, rate);
+                    printf("\n\nYou wil get ₹%.2f ad intrest on %d/%d/%d", intrst, add.deposite.month, add.deposite.day, add.deposite.year + 3);
+                }
+                else if (strcmp(add.acc_type, "saving") == 0)
+                {
+                    time = (1.0 / 12.0);
+                    rate = 8;
+                    intrst = intrest(time, add.amt, rate);
+                    printf("\n\nYou wil get ₹%.2f ad intrest on %d on eveey month: ", intrst, add.deposite.day);
+                }
+                else if (strcmp(add.acc_type, "current") == 0)
+                {
+                    printf("\nYou will get no interest\a\a");
+                }
+            }
+        }
+    }
+    fclose(ptr);
+    if (test != 1)
+    {
+        system("cls");
+        printf("\nRecord Not found!!\a\a");
+    see_invalid:
+        printf("\nEnter 0 to try again, 1 to return to main menu and 2 to exit:");
+        scanf("%d", &main_exit);
+        system("cls");
+        if (main_exit == 1)
+        {
+            menu();
+        }
+        else if (main_exit == 2)
+        {
+            close();
+        }
+        else if (main_exit == 0)
+        {
+            see();
+        }
+        else
+        {
+            system("cls");
+            printf("\nInvalid\a");
+            goto see_invalid;
+        }
+    }
+    else
+    {
+        printf("\nEnter 1 to goto the main menu and 0 to exit: ");
+        scanf("%d", &main_exit);
+        if (main_exit == 1)
+        {
+            system("cls");
+            menu();
+        }
+        else
+        {
+            system("cls");
+            close();
+        }
+    }
+}
